@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practicasuperpoderes.data.Repository
 import com.example.practicasuperpoderes.domain.model.Hero
+import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.domain.model.Thumbnail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,9 @@ class SuperheroDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow<Hero>(hero)
     val state: StateFlow<Hero> get() = _state
 
+    private val _stateSeries = MutableStateFlow<List<Serie>>(emptyList())
+    val stateSeries: StateFlow<List<Serie>> get() = _stateSeries
+
     fun getSuperhero(heroID: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO){
@@ -33,6 +37,16 @@ class SuperheroDetailViewModel @Inject constructor(
             }
 
             _state.update { result }
+        }
+    }
+
+    fun getSeries(heroID: String) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO){
+                repository.getSeries(heroID)
+            }
+
+            _stateSeries.update { result }
         }
     }
 }
