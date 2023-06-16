@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.practicasuperpoderes.ui.navigation.NavigationGraph
+import com.example.practicasuperpoderes.ui.superherodetail.SuperheroDetailViewModel
 import com.example.practicasuperpoderes.ui.superherolist.SuperHeroListViewModel
 import com.example.practicasuperpoderes.ui.theme.PracticaSuperPoderesTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,30 +28,33 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val superHeroListViewModel: SuperHeroListViewModel by viewModels()
+    private val superHeroDetailViewModel: SuperheroDetailViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PracticaSuperPoderesTheme {
-                NavigationGraph(superHeroListViewModel)
+                NavigationGraph(superHeroListViewModel, superHeroDetailViewModel)
             }
         }
     }
 }
 
-@Composable
+/*@Composable
 fun Screen1(onClickListener: ()->(Unit)){
     Box(modifier = Modifier
         .fillMaxSize()
         .background(Color.Red), contentAlignment = Alignment.Center){
         androidx.compose.material.Text("Screen 1", modifier = Modifier.clickable { onClickListener() })
     }
-}
+}*/
 
+/*
 @Preview
 @Composable
 fun Screen1_Preview() {
     Screen1({})
 }
+*/
 
 @Composable
 fun Screen2(onClickListener: (Int?)->(Unit)){

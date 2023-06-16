@@ -1,5 +1,6 @@
 package com.example.practicasuperpoderes.ui.superherolist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +38,7 @@ import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Thumbnail
 
 @Composable
-fun SuperHeroListScreen(viewModel: SuperHeroListViewModel) {
+fun SuperHeroListScreen(viewModel: SuperHeroListViewModel, onCharacterClick: (String)-> Unit = {_->}) {
 
     val state by viewModel.state.collectAsState()
 
@@ -46,13 +47,14 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel) {
     }
 
     SuperHeroListScreenContent(state) { hero ->
-
+        onCharacterClick(hero)
+        //viewModel.insertSuperhero(hero)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuperHeroListScreenContent(heros: List<Hero>, onSuperHeroListClicked: (String) -> Unit) {
+fun SuperHeroListScreenContent(heroes: List<Hero>, onSuperHeroListClicked: (String) -> Unit) {
 
     val scaffoldS = rememberScaffoldState()
 
@@ -65,9 +67,12 @@ fun SuperHeroListScreenContent(heros: List<Hero>, onSuperHeroListClicked: (Strin
             MyBottomBar()
         }
     ) {
-        LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = it) {
-            items(heros, key = { it.id }) { hero ->
-                SuperheroItem(hero = hero)
+        LazyColumn(Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = it) {
+            items(heroes,
+                key = { it.id }) { hero ->
+                SuperheroItem(hero = hero,
+                    onHeroClick = onSuperHeroListClicked)
             }
         }
     }
@@ -76,7 +81,8 @@ fun SuperHeroListScreenContent(heros: List<Hero>, onSuperHeroListClicked: (Strin
 @Composable
 fun BottomBarItem(text: String, icon: ImageVector) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(imageVector = icon, contentDescription = icon.name)
+        Icon(imageVector = icon,
+            contentDescription = icon.name)
         Text(text = text)
     }
 }
@@ -110,7 +116,7 @@ fun MyBottomBar_Preview() {
 fun MyTopBar() {
 
     CenterAlignedTopAppBar(title = {
-        Text(text = "Listado Superheroes")
+        Text(text = "Marvel SuperHeroes")
     })
 }
 
@@ -121,11 +127,12 @@ fun MyTopBar_Preview() {
 }
 
 @Composable
-fun SuperheroItem(hero: Hero, modifier: Modifier = Modifier) {
+fun SuperheroItem(hero: Hero, modifier: Modifier = Modifier, onHeroClick: (String) -> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
+            .clickable { onHeroClick(hero.id.toString()) }
     ) {
         AsyncImage(
             model = hero.thumbnail.path + "."+ hero.thumbnail.extension,
@@ -142,7 +149,7 @@ fun SuperheroItem(hero: Hero, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun SuperheroItem_Preview() {
-    SuperheroItem(Hero(1, "Goku", "", thumbnail = Thumbnail(path = "", extension = "")))
+    SuperheroItem(Hero(1, "Goku", "", thumbnail = Thumbnail(path = "", extension = ""))){}
 }
 
 @Preview(showBackground = true)

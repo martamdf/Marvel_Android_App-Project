@@ -6,14 +6,3 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
 
-Properties properties = new Properties()
-if (project.rootProject.file('local.properties').canRead()) {
-    properties.load(project.rootProject.file("local.properties").newDataInputStream())
-}
-
-/*
-
-buildConfigField 'String', 'HASH', properties.getProperty('HASH', '"xxxxxxxxx"')
-buildConfigField 'String', 'APIKEY', properties.getProperty('APIKEY', '"xxxxxxxx"')
-buildConfigField 'String', 'TS', properties.getProperty('TS', '"0"')
-*/

@@ -6,4 +6,5 @@ interface RemoteDataSource {
 
     suspend fun login(user: String, password: String): String
     suspend fun getHeroes(): List<Hero>
+    suspend fun getHero(idHero: String): Hero
 }

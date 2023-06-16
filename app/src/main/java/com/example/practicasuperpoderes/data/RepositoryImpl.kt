@@ -12,7 +12,10 @@ class RepositoryImpl @Inject constructor(private val remoteDataSource: RemoteDat
 //        return remoteDataSource.login(user, password)
 //    }
 
-    override suspend fun getHeros(): List<Hero> {
+    override suspend fun getHeroes(): List<Hero> {
         return remoteDataSource.getHeroes()
+    }
+    override suspend fun getHero(heroID: String): Hero {
+        return remoteDataSource.getHero(heroID)
     }
 }
