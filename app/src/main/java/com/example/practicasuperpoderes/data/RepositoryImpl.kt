@@ -1,7 +1,7 @@
 package com.example.practicasuperpoderes.data
 
 import com.example.practicasuperpoderes.data.remote.RemoteDataSource
-import com.example.practicasuperpoderes.domain.model.Comic
+//import com.example.practicasuperpoderes.domain.model.Comic
 import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class RepositoryImpl @Inject constructor(private val remoteDataSource: RemoteDat
     override suspend fun getSeries(heroID: String): List<Serie> {
         return remoteDataSource.getSeries(heroID)
     }
-    override suspend fun getComics(heroID: String): List<Comic> {
+    override suspend fun getComics(heroID: String): List<Serie> {
         return remoteDataSource.getComics(heroID)
     }
 }

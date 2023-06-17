@@ -34,10 +34,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.practicasuperpoderes.domain.model.Comic
 import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.domain.model.Thumbnail
@@ -50,24 +50,23 @@ import com.example.practicasuperpoderes.ui.superherolist.SuperheroItem
 fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, onClick:()-> Unit = {})
 {
     val state by viewModel.state.collectAsState()
-    val serieState by viewModel.stateSeries.collectAsState()
-    val comicState by viewModel.stateComics.collectAsState()
+    val seriesState by viewModel.stateSeries.collectAsState()
+    val comicsState by viewModel.stateComics.collectAsState()
 
-    Log.d("viewModel", "detail")
     LaunchedEffect(Unit){
         viewModel.getSuperhero(id)
         viewModel.getSeries(id)
         viewModel.getComics(id)
     }
 
-   SuperHeroDetailScreenContent(state, serieState, comicState) {
+   SuperHeroDetailScreenContent(state, seriesState, comicsState) {
        onClick()
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuperHeroDetailScreenContent(hero: Hero, series: List<Serie>, comics:List<Comic>, onSuperHeroListClicked: () -> Unit) {
+fun SuperHeroDetailScreenContent(hero: Hero, series: List<Serie>, comics:List<Serie>, goBack:() -> Unit) {
 
     val scaffoldS = rememberScaffoldState()
 
@@ -75,38 +74,34 @@ fun SuperHeroDetailScreenContent(hero: Hero, series: List<Serie>, comics:List<Co
         modifier = Modifier.fillMaxSize(),
         topBar = {
             MyTopBarDetail(hero.name){
-                onSuperHeroListClicked()
+                goBack()
             }
         },
-        bottomBar = {
-            MyBottomBar()
-        }
     ) { contentPadding ->
-
         HeroDetalle(hero, series, comics, modifier = Modifier.padding(contentPadding))
     }
 
 }
 
 @Composable
-fun HeroDetalle(hero: Hero, series: List<Serie>, comics: List<Comic>, modifier: Modifier){
+fun HeroDetalle(hero: Hero, series: List<Serie>, comics: List<Serie>, modifier: Modifier){
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item{
             HeroInfo(hero = hero)
         }
         item{
-            Text(text = "Series", style = MaterialTheme.typography.headlineLarge)
+            Text(text = "Series", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
         }
         item{
             SerieList(series)
         }
 
         item{
-          Text(text = "Comics", style = MaterialTheme.typography.headlineLarge)
+          Text(text = "Comics", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
         }
 
         item{
-            ComicList(comics)
+            SerieList(comics)
         }
     }
 }
@@ -141,22 +136,12 @@ fun SerieList(series: List<Serie>){
         }
     }
 }
-@Composable
-fun ComicList(comics: List<Comic>){
-    LazyRow(Modifier.padding(16.dp),
-        horizontalArrangement= Arrangement.spacedBy(16.dp)) {
-        items(comics,
-            key = { it.id }) { comic ->
-            ComicItem(comic = comic)
-        }
-    }
-}
 
 @Composable
 fun SerieItem(serie: Serie, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .width(200.dp)
+            .width(170.dp)
             .height(300.dp)
     ) {
         AsyncImage(
@@ -172,26 +157,7 @@ fun SerieItem(serie: Serie, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ComicItem(comic: Comic, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier
-            .width(200.dp)
-            .height(300.dp)
-    ) {
-        AsyncImage(
-            model = comic.thumbnail.path + "."+ comic.thumbnail.extension,
-            contentDescription = "${comic.title} photo",
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            contentScale = ContentScale.Crop
-        )
-        Text(text = comic.title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(10.dp))
-    }
-}
-
-@Composable
-fun MyTopBarDetail(name: String, goBack: () -> Unit = {}){
+fun MyTopBarDetail(name: String, goBack:() -> Unit = {}){
     TopAppBar(
         title = {
             androidx.compose.material.Text(text = name)

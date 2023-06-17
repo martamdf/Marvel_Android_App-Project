@@ -18,7 +18,6 @@ fun NavigationGraph(superHeroListViewModel: SuperHeroListViewModel, superheroDet
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screens.SuperheroesScreen.route) {
-
         composable(Screens.SuperheroesScreen.route) {
             SuperHeroListScreen(superHeroListViewModel) { id ->
                 navController.navigate(Screens.SuperheroDetailScreen.createRouteWithArgs(id))
@@ -34,7 +33,6 @@ fun NavigationGraph(superHeroListViewModel: SuperHeroListViewModel, superheroDet
             val id = it.arguments?.getString(Screens.SuperheroDetailScreen.ARG_ID) ?: ""
             SuperheroDetailScreen(id, superheroDetailViewModel){
                 navController.navigateUp()
-                Log.d("llkl", "llega aqui")
             }
         }
     }
