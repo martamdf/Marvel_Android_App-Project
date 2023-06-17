@@ -2,6 +2,7 @@ package com.example.practicasuperpoderes.data.remote
 import com.example.practicasuperpoderes.domain.model.Hero
 import okhttp3.Credentials
 import com.example.practicasuperpoderes.BuildConfig
+import com.example.practicasuperpoderes.domain.model.Comic
 import com.example.practicasuperpoderes.domain.model.Serie
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,5 +34,14 @@ class RemoteDataSourceImpl @Inject constructor(private val api: MarvelApi) : Rem
         var apikey = BuildConfig.APIKEY
 
         return api.getSeries(heroID, ts, apikey, hash).data.results
+    }
+
+    override suspend fun getComics(heroID: String): List<Comic> {
+
+        var ts = BuildConfig.TS
+        var hash = BuildConfig.HASH
+        var apikey = BuildConfig.APIKEY
+
+        return api.getComics(heroID, ts, apikey, hash).data.results
     }
 }

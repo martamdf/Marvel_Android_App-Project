@@ -1,5 +1,6 @@
 package com.example.practicasuperpoderes.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -31,7 +32,10 @@ fun NavigationGraph(superHeroListViewModel: SuperHeroListViewModel, superheroDet
                 })
         ) {
             val id = it.arguments?.getString(Screens.SuperheroDetailScreen.ARG_ID) ?: ""
-            SuperheroDetailScreen(id, superheroDetailViewModel)
+            SuperheroDetailScreen(id, superheroDetailViewModel){
+                navController.navigateUp()
+                Log.d("llkl", "llega aqui")
+            }
         }
     }
 }

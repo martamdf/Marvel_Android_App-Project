@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -114,7 +115,6 @@ fun MyBottomBar_Preview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopBar() {
-
     CenterAlignedTopAppBar(title = {
         Text(text = "Marvel SuperHeroes")
     })

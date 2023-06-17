@@ -3,6 +3,7 @@ package com.example.practicasuperpoderes.data.remote
 import com.example.practicasuperpoderes.data.remote.request.GetHeroesRequest
 import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Response
+import com.example.practicasuperpoderes.domain.model.ResponseComic
 import com.example.practicasuperpoderes.domain.model.ResponseSerie
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,5 +19,6 @@ interface MarvelApi {
     suspend fun getHero(@Path("id") heroId: String, @Query("ts") ts: String, @Query("apikey") apiKey: String, @Query("hash") hash: String): Response
     @GET("v1/public/characters/{id}/series")
     suspend fun getSeries(@Path("id") heroId: String, @Query("ts") ts: String, @Query("apikey") apiKey: String, @Query("hash") hash: String): ResponseSerie
-
+    @GET("v1/public/characters/{id}/comics")
+    suspend fun getComics(@Path("id") heroId: String, @Query("ts") ts: String, @Query("apikey") apiKey: String, @Query("hash") hash: String): ResponseComic
 }
