@@ -1,6 +1,5 @@
 package com.example.practicasuperpoderes.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost

@@ -2,7 +2,6 @@ package com.example.practicasuperpoderes.data.local
 
 import com.example.practicasuperpoderes.data.local.model.LocalSuperhero
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.count
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val dao: SuperheroDAO): LocalDataSource {

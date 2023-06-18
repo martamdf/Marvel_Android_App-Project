@@ -1,19 +1,14 @@
 package com.example.practicasuperpoderes.ui.superherolist
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practicasuperpoderes.data.Repository
-import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.UIHero
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 

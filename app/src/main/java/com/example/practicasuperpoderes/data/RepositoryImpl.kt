@@ -35,12 +35,12 @@ class RepositoryImpl @Inject constructor(
     }
 
     override suspend fun putHero(heroID: String) {
-        var hero = getHero(heroID)
+        val hero = getHero(heroID)
         hero.favorite = !hero.favorite
         localDataSource.insertHero(presentationToLocalMapper.mapPresentationSuperhero(hero))
     }
     override suspend fun updateHero(heroID: String) {
-        var hero = getHero(heroID)
+        val hero = getHero(heroID)
         hero.favorite = !hero.favorite
         localDataSource.updateHero(presentationToLocalMapper.mapPresentationSuperhero(hero))
     }

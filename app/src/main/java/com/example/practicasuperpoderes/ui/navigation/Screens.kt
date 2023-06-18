@@ -2,7 +2,6 @@ package com.example.practicasuperpoderes.ui.navigation
 
 import com.example.practicasuperpoderes.ui.navigation.Screens.SuperheroDetailScreen.ARG_ID
 
-
 sealed class Screens(val route: String) {
     object SuperheroesScreen : Screens(SCREEN2_BASE_ROUTE)
     object SuperheroDetailScreen : Screens(SCREEN3_ROUTE_TEMPLATE){
@@ -11,7 +10,6 @@ sealed class Screens(val route: String) {
             return SCREEN3_ROUTE_TO_FORMAT.format(id)
         }
     }
-
 
     companion object {
         private const val SCREEN2_BASE_ROUTE = "SuperheroesScreen"

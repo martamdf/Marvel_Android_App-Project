@@ -1,14 +1,9 @@
 package com.example.practicasuperpoderes.ui.superherodetail
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practicasuperpoderes.data.Repository
-//import com.example.practicasuperpoderes.domain.model.Comic
-import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
-import com.example.practicasuperpoderes.domain.model.Thumbnail
 import com.example.practicasuperpoderes.domain.model.UIHero
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -63,11 +58,13 @@ class SuperheroDetailViewModel @Inject constructor(
             _stateComics.update { result }
         }
     }
-    fun insertSuperhero(hero: String) {
-        Log.d("hero", "$hero")
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.putHero(hero)
-            Log.d("hero", "$hero")
+    fun updateFavSuperhero(hero: String) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                repository.updateHero(hero)
+                repository.getHero(hero)
+            }
+            _state.update { result }
         }
     }
 }
