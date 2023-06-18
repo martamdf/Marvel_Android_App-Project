@@ -5,7 +5,6 @@ import com.example.practicasuperpoderes.domain.model.Serie
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class RemoteDataSourceImpl @Inject constructor(private val api: MarvelApi) : RemoteDataSource {
 
     override suspend fun getHeroes(): List<Hero> {

@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Thumbnail
+import com.example.practicasuperpoderes.domain.model.UIHero
 
 @Composable
 fun SuperHeroListScreen(viewModel: SuperHeroListViewModel, onCharacterClick: (String)-> Unit = {_->}) {
@@ -55,7 +56,7 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel, onCharacterClick: (St
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuperHeroListScreenContent(heroes: List<Hero>, onSuperHeroListClicked: (String) -> Unit) {
+fun SuperHeroListScreenContent(heroes: List<UIHero>, onSuperHeroListClicked: (String) -> Unit) {
 
     val scaffoldS = rememberScaffoldState()
 
@@ -127,7 +128,7 @@ fun MyTopBar_Preview() {
 }
 
 @Composable
-fun SuperheroItem(hero: Hero, modifier: Modifier = Modifier, onHeroClick: (String) -> Unit) {
+fun SuperheroItem(hero: UIHero, modifier: Modifier = Modifier, onHeroClick: (String) -> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -135,7 +136,7 @@ fun SuperheroItem(hero: Hero, modifier: Modifier = Modifier, onHeroClick: (Strin
             .clickable { onHeroClick(hero.id.toString()) }
     ) {
         AsyncImage(
-            model = hero.thumbnail.path + "."+ hero.thumbnail.extension,
+            model = hero.thumbnail,
             contentDescription = "${hero.name} photo",
             modifier = Modifier
                 .fillMaxWidth()
@@ -149,7 +150,7 @@ fun SuperheroItem(hero: Hero, modifier: Modifier = Modifier, onHeroClick: (Strin
 @Preview
 @Composable
 fun SuperheroItem_Preview() {
-    SuperheroItem(Hero(1, "Goku", "", thumbnail = Thumbnail(path = "", extension = ""))){}
+    SuperheroItem(UIHero("1", "Goku", "", thumbnail = "",false)){}
 }
 
 @Preview(showBackground = true)

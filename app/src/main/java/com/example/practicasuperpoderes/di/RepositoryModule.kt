@@ -2,6 +2,8 @@ package com.example.practicasuperpoderes.di
 
 import com.example.practicasuperpoderes.data.Repository
 import com.example.practicasuperpoderes.data.RepositoryImpl
+import com.example.practicasuperpoderes.data.local.LocalDataSource
+import com.example.practicasuperpoderes.data.local.LocalDataSourceImpl
 import com.example.practicasuperpoderes.data.remote.RemoteDataSource
 import com.example.practicasuperpoderes.data.remote.RemoteDataSourceImpl
 import dagger.Binds
@@ -18,4 +20,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindRemoteDataSource(defaultRemoteDataSource: RemoteDataSourceImpl): RemoteDataSource
+
+    @Binds
+    abstract fun bindLocalDataSource(localDataSourceImpl: LocalDataSourceImpl): LocalDataSource
 }

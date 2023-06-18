@@ -1,12 +1,6 @@
 package com.example.practicasuperpoderes.ui.superherodetail
-import android.util.Log
-import android.widget.ScrollView
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,13 +10,11 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -34,16 +26,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.domain.model.Thumbnail
-import com.example.practicasuperpoderes.ui.superherolist.MyBottomBar
-import com.example.practicasuperpoderes.ui.superherolist.MyTopBar
-import com.example.practicasuperpoderes.ui.superherolist.SuperheroItem
+import com.example.practicasuperpoderes.domain.model.UIHero
 
 
 @Composable
@@ -66,9 +55,9 @@ fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, onCli
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuperHeroDetailScreenContent(hero: Hero, series: List<Serie>, comics:List<Serie>, goBack:() -> Unit) {
+fun SuperHeroDetailScreenContent(hero: UIHero, series: List<Serie>, comics:List<Serie>, goBack:() -> Unit) {
 
-    val scaffoldS = rememberScaffoldState()
+    //val scaffoldS = rememberScaffoldState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -80,11 +69,10 @@ fun SuperHeroDetailScreenContent(hero: Hero, series: List<Serie>, comics:List<Se
     ) { contentPadding ->
         HeroDetalle(hero, series, comics, modifier = Modifier.padding(contentPadding))
     }
-
 }
 
 @Composable
-fun HeroDetalle(hero: Hero, series: List<Serie>, comics: List<Serie>, modifier: Modifier){
+fun HeroDetalle(hero: UIHero, series: List<Serie>, comics: List<Serie>, modifier: Modifier){
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item{
             HeroInfo(hero = hero)
@@ -107,7 +95,7 @@ fun HeroDetalle(hero: Hero, series: List<Serie>, comics: List<Serie>, modifier: 
 }
 
 @Composable
-fun HeroInfo(hero: Hero){
+fun HeroInfo(hero: UIHero){
     Column(
         modifier = Modifier
             .padding()
@@ -115,7 +103,7 @@ fun HeroInfo(hero: Hero){
             .wrapContentHeight()
     ) {
         AsyncImage(
-            model = hero.thumbnail.path + "."+ hero.thumbnail.extension,
+            model = hero.thumbnail,
             contentDescription = "${hero.name} photo",
             modifier = Modifier
                 .fillMaxWidth(),
@@ -141,7 +129,7 @@ fun SerieList(series: List<Serie>){
 fun SerieItem(serie: Serie, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .width(170.dp)
+            .width(200.dp)
             .height(300.dp)
     ) {
         AsyncImage(
