@@ -30,9 +30,9 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             }
         }
     }
-    fun insertSuperhero(hero:String){
+    fun insertSuperhero(hero: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("hero", "$hero")
+            repository.updateHero(hero)
         }
     }
 }

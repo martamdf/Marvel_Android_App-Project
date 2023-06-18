@@ -1,6 +1,8 @@
 package com.example.practicasuperpoderes.ui.superherodetail
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +17,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -24,19 +28,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.domain.model.Thumbnail
 import com.example.practicasuperpoderes.domain.model.UIHero
 
 
 @Composable
-fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, onClick:()-> Unit = {})
+fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, goBack:()-> Unit = {})
 {
     val state by viewModel.state.collectAsState()
     val seriesState by viewModel.stateSeries.collectAsState()
@@ -48,8 +53,8 @@ fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, onCli
         viewModel.getComics(id)
     }
 
-   SuperHeroDetailScreenContent(state, seriesState, comicsState) {
-       onClick()
+   SuperHeroDetailScreenContent(state, seriesState, comicsState){
+       goBack()
     }
 }
 
@@ -67,25 +72,32 @@ fun SuperHeroDetailScreenContent(hero: UIHero, series: List<Serie>, comics:List<
             }
         },
     ) { contentPadding ->
-        HeroDetalle(hero, series, comics, modifier = Modifier.padding(contentPadding))
+        HeroDetail(hero, series, comics, modifier = Modifier
+            .padding(contentPadding))
     }
 }
 
 @Composable
-fun HeroDetalle(hero: UIHero, series: List<Serie>, comics: List<Serie>, modifier: Modifier){
+fun HeroDetail(hero: UIHero, series: List<Serie>, comics: List<Serie>, modifier: Modifier){
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item{
             HeroInfo(hero = hero)
         }
         item{
-            Text(text = "Series", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
+            Text(text = "Series",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .padding(8.dp))
         }
         item{
             SerieList(series)
         }
 
         item{
-          Text(text = "Comics", style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
+          Text(text = "Comics",
+              style = MaterialTheme.typography.headlineLarge,
+              modifier = Modifier
+                    .padding(8.dp))
         }
 
         item{
@@ -109,8 +121,20 @@ fun HeroInfo(hero: UIHero){
                 .fillMaxWidth(),
             contentScale = ContentScale.Crop
         )
-        Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
-        Text(text = hero.description, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+
+        Text(text = hero.name,
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier
+                .padding(8.dp))
+
+        MyFavIcon(name = hero.name,
+            isFav = hero.favorite,
+            modifier= Modifier)
+
+        Text(text = hero.description,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .padding(8.dp))
     }
 }
 
@@ -140,7 +164,10 @@ fun SerieItem(serie: Serie, modifier: Modifier = Modifier) {
                 .weight(1f),
             contentScale = ContentScale.Crop
         )
-        Text(text = serie.title, style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(10.dp))
+        Text(text = serie.title,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(10.dp))
     }
 }
 
@@ -171,4 +198,26 @@ fun MyTopBarDetail_Preview() {
 @Composable
 fun MySerieItem_Preview() {
     SerieItem(serie = Serie("1", "Título Serie", Thumbnail("","")))
+}
+
+@Composable
+fun MyFavIcon(name:String, isFav: Boolean, modifier: Modifier){
+    if(isFav){
+        androidx.compose.material3.Icon(
+            Icons.Rounded.Favorite,
+            contentDescription = " ${name} is Favorite",
+            modifier
+                .padding(8.dp),
+            tint = Color.Red
+        )
+    }
+    else {
+        androidx.compose.material3.Icon(
+            Icons.Rounded.FavoriteBorder,
+            contentDescription = " ${name} is not Favorite",
+            modifier
+                .padding(8.dp),
+            tint = Color.Red
+        )
+    }
 }

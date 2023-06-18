@@ -18,9 +18,13 @@ class LocalDataSourceImpl @Inject constructor(private val dao: SuperheroDAO): Lo
         return  dao.getCount() == 0
     }
 
-    /*override suspend fun insertHero(localSuperhero: LocalSuperhero) {
+    override suspend fun insertHero(localSuperhero: LocalSuperhero) {
         dao.insertHero(localSuperhero)
-    }*/
+    }
+
+    override suspend fun updateHero(localSuperhero: LocalSuperhero) {
+        dao.updateHero(localSuperhero)
+    }
 
     override suspend fun getHero(heroID: String): LocalSuperhero {
         return dao.getHero(heroID)

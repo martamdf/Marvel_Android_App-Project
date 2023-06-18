@@ -1,4 +1,5 @@
 package com.example.practicasuperpoderes.ui.superherodetail
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +27,7 @@ class SuperheroDetailViewModel @Inject constructor(
 
     private val hero = UIHero("1","","", "", false)
 
-    private val _state = MutableStateFlow<UIHero>(hero)
+    private val _state = MutableStateFlow(hero)
     val state: StateFlow<UIHero> get() = _state
 
     private val _stateSeries = MutableStateFlow<List<Serie>>(emptyList())
@@ -44,7 +45,6 @@ class SuperheroDetailViewModel @Inject constructor(
             _state.update { result }
         }
     }
-
     fun getSeries(heroID: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO){
@@ -54,7 +54,6 @@ class SuperheroDetailViewModel @Inject constructor(
             _stateSeries.update { result }
         }
     }
-
     fun getComics(heroID: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO){
@@ -62,6 +61,13 @@ class SuperheroDetailViewModel @Inject constructor(
             }
 
             _stateComics.update { result }
+        }
+    }
+    fun insertSuperhero(hero: String) {
+        Log.d("hero", "$hero")
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.putHero(hero)
+            Log.d("hero", "$hero")
         }
     }
 }

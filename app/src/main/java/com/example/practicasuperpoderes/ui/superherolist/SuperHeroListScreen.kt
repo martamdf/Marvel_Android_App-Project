@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomAppBar
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -35,9 +34,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.practicasuperpoderes.domain.model.Hero
-import com.example.practicasuperpoderes.domain.model.Thumbnail
 import com.example.practicasuperpoderes.domain.model.UIHero
+import com.example.practicasuperpoderes.ui.superherodetail.MyFavIcon
 
 @Composable
 fun SuperHeroListScreen(viewModel: SuperHeroListViewModel, onCharacterClick: (String)-> Unit = {_->}) {
@@ -48,15 +46,22 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel, onCharacterClick: (St
         viewModel.getSuperheros()
     }
 
-    SuperHeroListScreenContent(state) { hero ->
-        onCharacterClick(hero)
+    fun onSuperHeroFavClicked(heroID: String):Unit{
+        viewModel.insertSuperhero(heroID)
+    }
+
+    SuperHeroListScreenContent(state, onSuperHeroListClicked= onCharacterClick) { hero ->
+        onSuperHeroFavClicked(hero)
+    //onCharacterClick(hero)
         //viewModel.insertSuperhero(hero)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuperHeroListScreenContent(heroes: List<UIHero>, onSuperHeroListClicked: (String) -> Unit) {
+fun SuperHeroListScreenContent(heroes: List<UIHero>,
+                               onSuperHeroListClicked: (String) -> Unit,
+                               onSuperHeroFavClicked: (String) -> Unit) {
 
     val scaffoldS = rememberScaffoldState()
 
@@ -74,7 +79,8 @@ fun SuperHeroListScreenContent(heroes: List<UIHero>, onSuperHeroListClicked: (St
             items(heroes,
                 key = { it.id }) { hero ->
                 SuperheroItem(hero = hero,
-                    onHeroClick = onSuperHeroListClicked)
+                    onHeroClick = onSuperHeroListClicked,
+                    onFavClick = onSuperHeroFavClicked)
             }
         }
     }
@@ -128,12 +134,12 @@ fun MyTopBar_Preview() {
 }
 
 @Composable
-fun SuperheroItem(hero: UIHero, modifier: Modifier = Modifier, onHeroClick: (String) -> Unit) {
+fun SuperheroItem(hero: UIHero, modifier: Modifier = Modifier, onHeroClick: (String) -> Unit, onFavClick:(String)-> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .height(300.dp)
-            .clickable { onHeroClick(hero.id.toString()) }
+            .clickable { onHeroClick(hero.id) }
     ) {
         AsyncImage(
             model = hero.thumbnail,
@@ -143,18 +149,25 @@ fun SuperheroItem(hero: UIHero, modifier: Modifier = Modifier, onHeroClick: (Str
                 .weight(1f),
             contentScale = ContentScale.Crop
         )
-        Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(8.dp))
+        Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier
+            .padding(8.dp))
+
+        MyFavIcon(name = hero.name,
+            isFav = hero.favorite,
+            modifier = modifier
+                .clickable { onFavClick(hero.id) }
+        )
     }
 }
 
 @Preview
 @Composable
 fun SuperheroItem_Preview() {
-    SuperheroItem(UIHero("1", "Goku", "", thumbnail = "",false)){}
+    //SuperheroItem(UIHero("1", "Goku", "", thumbnail = "",false)){}
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SuperHeroListScreen_Preview() {
-    SuperHeroListScreenContent(emptyList()) { }
+    //SuperHeroListScreenContent(emptyList()) { }
 }

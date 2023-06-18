@@ -5,5 +5,5 @@ data class UIHero (
     val name: String,
     val description: String,
     val thumbnail: String,
-    val favorite: Boolean
+    var favorite: Boolean
 )
