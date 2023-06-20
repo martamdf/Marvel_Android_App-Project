@@ -42,7 +42,7 @@ import com.example.practicasuperpoderes.domain.model.UIHero
 @Composable
 fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, goBack:()-> Unit = {})
 {
-    val state by viewModel.state.collectAsState()
+    val heroState by viewModel.state.collectAsState()
     val seriesState by viewModel.stateSeries.collectAsState()
     val comicsState by viewModel.stateComics.collectAsState()
 
@@ -56,8 +56,8 @@ fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, goBac
         viewModel.updateFavSuperhero(heroID)
     }
 
-    SuperHeroDetailScreenContent(state, seriesState, comicsState, goBack = goBack){
-       onSuperHeroFavClicked(heroID = state.id)
+    SuperHeroDetailScreenContent(heroState, seriesState, comicsState, goBack = goBack){
+       onSuperHeroFavClicked(heroID = heroState.id)
     }
 }
 
@@ -237,7 +237,7 @@ fun MyFavIcon(name:String, isFav: Boolean, modifier: Modifier){
     if(isFav){
         androidx.compose.material3.Icon(
             Icons.Rounded.Favorite,
-            contentDescription = "$name is Favorite",
+            contentDescription = "Is Favorite",
             modifier
                 .padding(8.dp),
             tint = Color.Red
@@ -246,7 +246,7 @@ fun MyFavIcon(name:String, isFav: Boolean, modifier: Modifier){
     else {
         androidx.compose.material3.Icon(
             Icons.Rounded.FavoriteBorder,
-            contentDescription = "$name is not Favorite",
+            contentDescription = "Is not Favorite",
             modifier
                 .padding(8.dp),
             tint = Color.Red
