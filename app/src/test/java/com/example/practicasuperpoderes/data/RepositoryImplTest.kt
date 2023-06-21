@@ -7,11 +7,8 @@ import com.example.practicasuperpoderes.data.mappers.PresentationToLocalMapper
 import com.example.practicasuperpoderes.data.mappers.RemoteToLocalMapper
 import com.example.practicasuperpoderes.data.remote.RemoteDataSource
 import com.example.practicasuperpoderes.data.remote.fakes.FakeRemoteDataSource
-import com.example.practicasuperpoderes.domain.model.UIHero
 import com.example.practicasuperpoderes.utils.generateOneLocalSuperhero
-import io.mockk.Runs
 import io.mockk.coEvery
-import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -67,9 +64,7 @@ class RepositoryImplTest {
         // WHEN
         val actual = repositoryImpl.getHero("1") // cambia a true
 
-
         // THEN
         assert(!actual.favorite)
     }
-
 }

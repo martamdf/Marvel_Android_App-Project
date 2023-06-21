@@ -1,16 +1,14 @@
 package com.example.practicasuperpoderes.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.compose.runtime.collectAsState
 import com.example.practicasuperpoderes.data.Repository
 import com.example.practicasuperpoderes.ui.superherolist.SuperHeroListViewModel
-import com.example.practicasuperpoderes.utils.generateLocalSuperheroes
-import com.example.practicasuperpoderes.utils.generateOneSuperhero
 import com.example.practicasuperpoderes.utils.generateUISuperheroes
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -31,6 +29,7 @@ class SuperHeroViewModelTest {
     private lateinit var repository: Repository
     // Fakes
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
@@ -42,7 +41,6 @@ class SuperHeroViewModelTest {
     fun `WHEN getHero EXPECT successful response`()  {
         // GIVEN
 
-        val id = "testingID"
         coEvery { repository.getHeroes() } returns generateUISuperheroes()
 
         // WHEN
@@ -53,6 +51,7 @@ class SuperHeroViewModelTest {
         assertEquals(actualLiveData.size, 1)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @After
     fun tearDown() {
         Dispatchers.resetMain()

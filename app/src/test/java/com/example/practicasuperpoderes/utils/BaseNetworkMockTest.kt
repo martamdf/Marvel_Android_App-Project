@@ -9,29 +9,29 @@ import org.junit.Before
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-open class BaseNetworkMockTest {
-
-    lateinit var api: MarvelApi
-    private lateinit var mockWebServer: MockWebServer
-    private val moshi = Moshi.Builder()
-        .addLast(KotlinJsonAdapterFactory())
-        .build()
-
-    @Before
-    fun setup() {
-        mockWebServer = MockWebServer()
-        mockWebServer.dispatcher = MarvelApiMockDispatcher()
-        mockWebServer.start()
-
-        api = Retrofit.Builder()
-            .baseUrl(mockWebServer.url("/"))
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(MarvelApi::class.java)
-    }
-
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
-    }
-}
+//open class BaseNetworkMockTest {
+//
+//    lateinit var api: MarvelApi
+//    private lateinit var mockWebServer: MockWebServer
+//    private val moshi = Moshi.Builder()
+//        .addLast(KotlinJsonAdapterFactory())
+//        .build()
+//
+//    @Before
+//    fun setup() {
+//        mockWebServer = MockWebServer()
+//        mockWebServer.dispatcher = MarvelApiMockDispatcher()
+//        mockWebServer.start()
+//
+//        api = Retrofit.Builder()
+//            .baseUrl(mockWebServer.url("/"))
+//            .addConverterFactory(MoshiConverterFactory.create(moshi))
+//            .build()
+//            .create(MarvelApi::class.java)
+//    }
+//
+//    @After
+//    fun tearDown() {
+//        mockWebServer.shutdown()
+//    }
+//}

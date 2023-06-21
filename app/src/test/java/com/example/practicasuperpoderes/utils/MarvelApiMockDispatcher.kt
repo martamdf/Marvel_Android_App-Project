@@ -7,31 +7,22 @@ import java.io.File
 import java.net.HttpURLConnection
 import java.util.concurrent.TimeUnit
 
-class MarvelApiMockDispatcher : Dispatcher() {
-    override fun dispatch(request: RecordedRequest): MockResponse {
-        return when (request.path) {
-            "/api/heros/all" -> {
-                MockResponse()
-                    .setResponseCode(HttpURLConnection.HTTP_OK)
-                    .setBody(getJson("json/heroes.json"))
-            }
-            "/api/heros/locations" -> {
-                MockResponse()
-                    .setResponseCode(HttpURLConnection.HTTP_OK)
-                    .setBody(getJson("json/locations.json"))
-            }
-            "/api/data/herolike" -> {
-                MockResponse()
-                    .setResponseCode(HttpURLConnection.HTTP_CREATED)
-                    .setBody("")
-            }
-            else -> MockResponse().throttleBody(1024, 5, TimeUnit.SECONDS)
-        }
-    }
-}
-
-internal fun getJson(path: String): String {
-
-    val file = File("/Users/martamaquedano/Projects/10. Android Avanzado/BasicApp/app/src/main/resources/" +path)
-    return String(file.readBytes())
-}
+//class MarvelApiMockDispatcher : Dispatcher() {
+//    override fun dispatch(request: RecordedRequest): MockResponse {
+//        var path_o = request.path+"hola"
+//        return when (request.path) {
+//            "/v1/public/characters" -> {
+//                MockResponse()
+//                    .setResponseCode(HttpURLConnection.HTTP_OK)
+//                    .setBody(getJson("json/heroes.json"))
+//            }
+//            else -> MockResponse().throttleBody(1024, 5, TimeUnit.SECONDS)
+//        }
+//    }
+//}
+//
+//internal fun getJson(path: String): String {
+//
+//    val file = File("/Users/martamaquedano/Projects/10. Android Avanzado/BasicApp/app/src/main/resources/" +path)
+//    return String(file.readBytes())
+//}

@@ -4,6 +4,7 @@ import com.example.practicasuperpoderes.data.remote.RemoteDataSource
 import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.utils.generateGetHeroesResponse
+import com.example.practicasuperpoderes.utils.generateOneSuperhero
 import com.example.practicasuperpoderes.utils.generatePublishList
 
 class FakeRemoteDataSource: RemoteDataSource {
@@ -13,11 +14,11 @@ class FakeRemoteDataSource: RemoteDataSource {
     }
 
     override suspend fun getHero(idHero: String): Hero {
-        TODO("Not yet implemented")
+        return generateOneSuperhero()
     }
 
     override suspend fun getSeries(heroID: String): List<Serie> {
-        TODO("Not yet implemented")
+        return generatePublishList()
     }
 
     override suspend fun getComics(heroID: String): List<Serie> {
