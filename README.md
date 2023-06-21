@@ -19,4 +19,4 @@ parámetros(*):
 
 `HASH = "YOUR_HASH"`
 
-(*)Puedes encontrar más info de como obtenerlos en la web https://developer.marvel.com/
+(*)Puedes encontrar más info de como obtener estos parámetros en la web https://developer.marvel.com/
