@@ -52,7 +52,7 @@ class RepositoryImplTest {
 
     // Test con Mocks
     @Test
-    fun `WHEN getHero EXPECT one Hero`() = runTest {
+    fun `WHEN getHero EXPECT one Hero not favorite`() = runTest {
         // GIVEN
         localDataSource = mockk()
         remoteDataSource = mockk()
@@ -62,7 +62,7 @@ class RepositoryImplTest {
         coEvery { localDataSource.getHero("1") } returns generateOneLocalSuperhero()
 
         // WHEN
-        val actual = repositoryImpl.getHero("1") // cambia a true
+        val actual = repositoryImpl.getHero("1")
 
         // THEN
         assert(!actual.favorite)

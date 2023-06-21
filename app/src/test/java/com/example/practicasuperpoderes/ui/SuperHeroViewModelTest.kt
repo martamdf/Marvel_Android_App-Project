@@ -40,7 +40,6 @@ class SuperHeroViewModelTest {
     @Test
     fun `WHEN getHero EXPECT successful response`()  {
         // GIVEN
-
         coEvery { repository.getHeroes() } returns generateUISuperheroes()
 
         // WHEN
