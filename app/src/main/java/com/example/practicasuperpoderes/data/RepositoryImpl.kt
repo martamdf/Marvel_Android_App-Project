@@ -30,6 +30,7 @@ class RepositoryImpl @Inject constructor(
             localToPresentationMapper.mapLocalSuperheroes(it)
         }
     }
+
     override suspend fun getHero(heroID: String): UIHero {
         return localToPresentationMapper.mapLocalSuperhero(localDataSource.getHero(heroID))
     }
@@ -39,6 +40,7 @@ class RepositoryImpl @Inject constructor(
         hero.favorite = !hero.favorite
         localDataSource.insertHero(presentationToLocalMapper.mapPresentationSuperhero(hero))
     }
+
     override suspend fun updateHero(heroID: String) {
         val hero = getHero(heroID)
         hero.favorite = !hero.favorite
@@ -48,6 +50,7 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getSeries(heroID: String): List<Serie> {
         return remoteDataSource.getSeries(heroID)
     }
+
     override suspend fun getComics(heroID: String): List<Serie> {
         return remoteDataSource.getComics(heroID)
     }

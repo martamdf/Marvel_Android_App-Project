@@ -27,6 +27,6 @@ class SuperheroDetailScreenContentTest {
         }
 
         // THEN
-        composeRule.onNodeWithContentDescription("Is not Favorite").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("${hero.name} Is not Favorite").assertIsDisplayed()
     }
 }

@@ -39,6 +39,13 @@ import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.domain.model.Thumbnail
 import com.example.practicasuperpoderes.domain.model.UIHero
 
+/*
+Como Componentes adicionales, he añadido:
+    - FAB para agregar/eliminar de favoritos cuando no es accesible el corazón clicable
+    - Elevated Card de Material3, que dispone de propiedades adicionales a la card
+      clásica, y puede configurarse para crear un efecto tipo flotante.
+ */
+
 @Composable
 fun SuperheroDetailScreen(id: String, viewModel: SuperheroDetailViewModel, goBack:()-> Unit = {})
 {
@@ -237,7 +244,7 @@ fun MyFavIcon(name:String, isFav: Boolean, modifier: Modifier){
     if(isFav){
         androidx.compose.material3.Icon(
             Icons.Rounded.Favorite,
-            contentDescription = "Is Favorite",
+            contentDescription = "$name Is Favorite",
             modifier
                 .padding(8.dp),
             tint = Color.Red
@@ -246,7 +253,7 @@ fun MyFavIcon(name:String, isFav: Boolean, modifier: Modifier){
     else {
         androidx.compose.material3.Icon(
             Icons.Rounded.FavoriteBorder,
-            contentDescription = "Is not Favorite",
+            contentDescription = "$name Is not Favorite",
             modifier
                 .padding(8.dp),
             tint = Color.Red

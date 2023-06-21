@@ -1,9 +1,8 @@
 package com.example.practicasuperpoderes.data.remote
-import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.BuildConfig
+import com.example.practicasuperpoderes.domain.model.Hero
 import com.example.practicasuperpoderes.domain.model.Serie
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class RemoteDataSourceImpl @Inject constructor(private val api: MarvelApi) : RemoteDataSource {
 

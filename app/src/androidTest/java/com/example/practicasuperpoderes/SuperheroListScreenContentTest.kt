@@ -26,6 +26,6 @@ class SuperheroListScreenContentTest {
 
         // THEN
         composeRule.onNodeWithText(hero.name).assertExists()
-        composeRule.onNodeWithContentDescription("Is not Favorite").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("${hero.name} Is not Favorite").assertIsDisplayed()
     }
 }
