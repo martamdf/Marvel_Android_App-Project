@@ -17,7 +17,7 @@ class SuperheroDetailScreenContentTest {
     @Test
     fun given_a_not_fav_hero_its_heart_is_correctly_displayed(){
         // GIVEN
-        var hero = UIHero("", "", "", "", false)
+        val hero = UIHero("", "", "", "", false)
         composeRule.setContent {
             SuperHeroDetailScreenContent(hero=hero,
                 listOf(Serie("", "", Thumbnail("", ""))),

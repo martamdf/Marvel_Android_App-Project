@@ -16,7 +16,7 @@ class SuperheroListScreenContentTest {
     @Test
     fun given_hero_list_the_hero_is_correctly_displayed(){
         // GIVEN
-        var hero = UIHero("", "", "", "", false)
+        val hero = UIHero("", "", "", "", false)
         composeRule.setContent {
             SuperHeroListScreenContent(
                 listOf(hero),
@@ -25,7 +25,7 @@ class SuperheroListScreenContentTest {
         }
 
         // THEN
-        composeRule.onNodeWithText("${hero.name}").assertExists()
+        composeRule.onNodeWithText(hero.name).assertExists()
         composeRule.onNodeWithContentDescription("Is not Favorite").assertIsDisplayed()
     }
 }
