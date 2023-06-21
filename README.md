@@ -13,8 +13,10 @@ elemento se mostrará la pantalla de detalle.
 Una vez clonado el repositorio, acceder al archivo local.properties e introducir los datos correspondeientes a los siguientes
 parámetros(*):
 
-TS = "YOUR_TS"
-APIKEY = "YOUR_APIKEY"
-HASH = "YOUR_HASH"
+`TS = "YOUR_TS"`
+
+`APIKEY = "YOUR_APIKEY"`
+
+`HASH = "YOUR_HASH"`
 
 (*)Puedes encontrar más info de como obtenerlos en la web https://developer.marvel.com/
