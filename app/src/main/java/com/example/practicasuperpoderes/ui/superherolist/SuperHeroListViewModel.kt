@@ -25,7 +25,7 @@ class SuperHeroListViewModel @Inject constructor(private val repository: Reposit
             }
         }
     }
-    fun insertSuperhero(hero: String) {
+    fun updateFavSuperhero(hero: String) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateHero(hero)
         }

@@ -43,7 +43,7 @@ fun SuperHeroListScreen(viewModel: SuperHeroListViewModel, onHeroClick: (String)
     }
 
     fun onSuperHeroFavClicked(heroID: String) {
-        viewModel.insertSuperhero(heroID)
+        viewModel.updateFavSuperhero(heroID)
     }
 
     SuperHeroListScreenContent(state, onSuperHeroListClicked= onHeroClick) { hero ->
