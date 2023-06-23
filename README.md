@@ -1,4 +1,4 @@
-# PracticaAndroidSuperPoderes
+# Práctica Android Super-Poderes
 
 ## Objetivo
 Aplicación listado-detalle utilizando como recurso la Api de Marvel.
