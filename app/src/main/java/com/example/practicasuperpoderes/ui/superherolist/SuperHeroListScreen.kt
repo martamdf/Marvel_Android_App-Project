@@ -30,7 +30,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.example.practicasuperpoderes.domain.model.UIHero
+import com.example.practicasuperpoderes.ui.superherodetail.MyCircularProgressIndicator
 import com.example.practicasuperpoderes.ui.superherodetail.MyFavIcon
 
 @Composable
@@ -116,13 +118,16 @@ fun SuperheroItem(hero: UIHero, modifier: Modifier = Modifier, onHeroClick: (Str
         shape = CardDefaults.elevatedShape
 
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = hero.thumbnail,
             contentDescription = "${hero.name} photo",
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            loading = {
+                MyCircularProgressIndicator()
+            }
         )
         Text(text = hero.name, style = MaterialTheme.typography.headlineLarge, modifier = Modifier
             .padding(8.dp))

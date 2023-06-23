@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -35,15 +37,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import com.example.practicasuperpoderes.domain.model.Serie
 import com.example.practicasuperpoderes.domain.model.Thumbnail
 import com.example.practicasuperpoderes.domain.model.UIHero
 
 /*
 Como Componentes adicionales, he añadido:
+    - CircularProgressIndicator, para dar feedback al usuario de la carga.
     - FAB para agregar/eliminar de favoritos cuando no es accesible el corazón clicable
     - Elevated Card de Material3, que dispone de propiedades adicionales a la card
       clásica, y puede configurarse para crear un efecto tipo flotante.
+    - He sustituído las Async Images por SubcomposeAsyncImage que permiten añadir un componente
+      mientras se carga la imagen (en este caso he metido el CircularProgressIndicator).
  */
 
 @Composable
@@ -172,16 +178,30 @@ fun HeroInfo(hero: UIHero, onSuperHeroFavClicked: (String) -> Unit){
 
 @Composable
 fun SeriesList(series: List<Serie>){
-    LazyRow(
-        Modifier.padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        items(series,
-            key = { it.id }) { serie ->
-            SerieItem(serie = serie)
+
+    if(series.isNotEmpty()){
+        LazyRow(
+            Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            items(series,
+                key = { it.id }) { serie ->
+                SerieItem(serie = serie)
+            }
         }
+    }
+    else{
+        MyCircularProgressIndicator()
     }
 }
 
+@Composable
+fun MyCircularProgressIndicator() {
+    CircularProgressIndicator(
+        modifier = Modifier.size(size = 50.dp),
+        color = Color.DarkGray,
+        strokeWidth = 6.dp
+    )
+}
 @Composable
 fun SerieItem(serie: Serie, modifier: Modifier = Modifier) {
     ElevatedCard(
@@ -193,13 +213,16 @@ fun SerieItem(serie: Serie, modifier: Modifier = Modifier) {
         shape = CardDefaults.elevatedShape
 
     ) {
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = serie.thumbnail.path + "."+ serie.thumbnail.extension,
             contentDescription = "${serie.title} photo",
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            loading = {
+                MyCircularProgressIndicator()
+            },
         )
         Text(
             text = serie.title,
