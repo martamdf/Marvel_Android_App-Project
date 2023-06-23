@@ -1,7 +1,7 @@
 # Práctica Android Super-Poderes
 
 ## Objetivo
-Aplicación listado-detalle utilizando como recurso la Api de Marvel.
+Aplicación listado-detalle utilizando Jetpack Compose, Kotlin Flow y la Api de Marvel como origen de datos.
 
 - Listado: muestra el conjunto de superhéroes con una información reducida
 que permita identificar correctamente a cada uno. Al hacer click en un
